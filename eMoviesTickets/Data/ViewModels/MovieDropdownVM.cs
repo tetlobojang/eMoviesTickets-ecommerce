@@ -5,7 +5,8 @@ namespace eMoviesTickets.Data.ViewModels
     public class MovieDropdownVM
     {
 
-        public MovieDropdownVM() { 
+        public MovieDropdownVM() 
+        { 
             Producers = new List<Producer>();
             Actors = new List<Actor>();
             Cinemas = new List<Cinema>();

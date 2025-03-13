@@ -23,8 +23,8 @@
                        <li class="navbar-nav flex-grow-1">
                            <a class="nav-link text-dark" asp-controller="Movies" asp-action="Index"><i class="badge-info bi-film"></i>Movies</a>
                        </li>
-                       <li class="nav-item dropdown">
-                           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                       <li class="nav-item dropdown" style="float:inline-start">
+                           <a class="nav-link dropdown-toggle" style="float:inline-start" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="bi bi-gear"></i> Management
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -34,11 +34,27 @@
                             </div>
                        </li>
                     </ul>
-                    <form class="form-check-inline my-2 my-lg-0" asp-controller="Movies" asp-action="Filter" style="padding-right: 20px;">
-                        <input name="searchString" type="text" class="form-control" placeholder="Search a movie..." /><button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="bi bi-search float-right"></i></button>
-                        
-                        
+                    <form class="d-flex align-items-center flex-nowrap" asp-controller="Movies" asp-action="Filter" style="padding-right: 25px;">
+                        <input name="searchString" type="text" class="form-control" placeholder="Search a movie..." />
+                        <button class="btn btn-outline-success my-2 my-sm-0" style="float:right" type="submit"><i class="bi bi-search"></i></button>
                     </form>
+                    
+                    <ul class="navbar-nav">
+                        @await Component.InvokeAsync("ShoppingCartSummary")
+                    </ul>
+                    @* User profile section *@
+                    <div class="dropdown">
+                        <button class="btn btn-outline-success dropdown-toggle" type="button" id="profile-btn" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person-badge"></i> Hello User
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="profile-btn">
+                            <li>
+                                <a class="dropdown-item" asp-controller="Orders" asp-action="Index">
+                                    <i class="bi bi-list"></i>Orders
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </nav>

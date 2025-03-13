@@ -41,6 +41,8 @@ namespace eMoviesTickets.Controllers
             var details = await _service.GetMovieByIdAsync(Id);
             return View(details);
         }
+
+        //Get method: Loads the create form with dropdown list
         public async Task<IActionResult> Create() {
 
             var dropdowns = await _service.GetDropdownList();

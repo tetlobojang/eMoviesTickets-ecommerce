@@ -14,6 +14,7 @@ namespace eMoviesTickets.Data.Services
             _context = context;
         }
 
+        // Adding a new movie and saving it
         public async Task<NewMovieVM> AddNewMovieAsync(NewMovieVM newMovie)
         {
             var newmovie = new Movie()
@@ -73,6 +74,8 @@ namespace eMoviesTickets.Data.Services
         //Update an existing movie
         public async Task UpdateMovieAsync(NewMovieVM newMovie)
         {
+
+            //Check if the movie exists 
             var dbMovie = await _context.Movies.FirstOrDefaultAsync(n => n.Id == newMovie.Id);
             if (dbMovie != null) 
             {
@@ -88,6 +91,8 @@ namespace eMoviesTickets.Data.Services
 
                 await _context.SaveChangesAsync();
             }
+
+            //remove the existing actors
             var existingActorDB = _context.Actors_Movies.Where(n => n.MovieId == newMovie.Id).ToList();
             _context.Actors_Movies.RemoveRange(existingActorDB);
             await _context.SaveChangesAsync();

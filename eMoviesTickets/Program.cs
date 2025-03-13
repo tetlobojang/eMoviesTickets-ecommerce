@@ -1,8 +1,12 @@
 using eMoviesTickets.Data;
+using eMoviesTickets.Data.Cart;
 using eMoviesTickets.Data.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Localization;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
+
 
 //DBContext Configuration
 builder.Services.AddDbContext<AppDbContext>(options => 
@@ -14,9 +18,21 @@ builder.Services.AddScoped<MoviesService>();
 builder.Services.AddScoped<IActorsService, ActorsService>();
 builder.Services.AddScoped<ProducersService>();
 builder.Services.AddScoped <CinemasService>();
+builder.Services.AddScoped<OrdersService>();
 
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddScoped(sc => ShoppingCart.GetShoppingCart(sc));
+builder.Services.AddSession();
 
 var app = builder.Build();
+
+var supportedCultures = new[] { new CultureInfo("en-BW") };
+var localizationsOptions = new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new RequestCulture("en-BW"),
+    SupportedCultures = supportedCultures,
+    SupportedUICultures = supportedCultures,
+};
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -26,10 +42,12 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseRequestLocalization(localizationsOptions);
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseSession();
 
 app.UseAuthorization();
 
